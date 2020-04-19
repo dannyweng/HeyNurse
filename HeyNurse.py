@@ -1,4 +1,3 @@
-"""A demo of the Google CloudSpeech recognizer."""
 import argparse
 import locale
 import logging
@@ -14,7 +13,8 @@ def get_hints(language_code):
                 'turn off the light',
                 'blink the light',
                 'goodbye',
-                'repeat after me')
+                'repeat after me',
+                'hey nurse')
     return None
 
 def locale_language():
@@ -56,6 +56,11 @@ def main():
                 # Remove "repeat after me" from the text to be repeated
                 to_repeat = text.replace('repeat after me', '', 1)
                 aiy.voice.tts.say(to_repeat)
+            
+            # Hey Nurse commands
+            if 'hey nurse' in text:
+                aiy.voice.tts.say('hi danny')
+
             elif 'goodbye' in text:
                 break
 
