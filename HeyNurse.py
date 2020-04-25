@@ -148,6 +148,7 @@ def process_event(assistant, led, event):
             
             # Hey Nurse commands
             if 'hey nurse' in text:
+                assistant.start()
                 aiy.voice.tts.say('hi danny')
                 logging.info(event)
                 print(event.type)
