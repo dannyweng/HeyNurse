@@ -114,7 +114,8 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
-    
+    hints = get_hints(args.language)
+    client = CloudSpeechClient()
     with Board() as board:
         while True:
             if hints:
@@ -186,9 +187,7 @@ def main():
     args = parser.parse_args()
 
     logging.info('Initializing for language %s...', args.language)
-    hints = get_hints(args.language)
 
-    client = CloudSpeechClient()
 
     credentials = auth_helpers.get_assistant_credentials()
     with Board() as board, Assistant(credentials) as assistant:
