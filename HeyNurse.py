@@ -131,6 +131,8 @@ def process_event(assistant, led, event):
                     board.led.state = Led.OFF
                 elif 'blink the light' in text:
                     board.led.state = Led.BLINK
+                elif 'goodbye' in text:
+                    break
                 # Our new command:
                 if 'repeat after me' in text:
                     # Remove "repeat after me" from the text to be repeated
@@ -173,8 +175,7 @@ def process_event(assistant, led, event):
 
 
 
-                elif 'goodbye' in text:
-                    break
+
 
                 logging.info(event)
 
