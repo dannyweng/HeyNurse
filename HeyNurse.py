@@ -138,7 +138,7 @@ def say_ip():
 def process_event(assistant, led, event):
 
     client = CloudSpeechClient()
-        with Board() as board:
+    with Board() as board:
         while True:
             if hints:
                 logging.info('Say something, e.g. %s.' % ', '.join(hints))
