@@ -19,12 +19,7 @@ from aiy.board import Board, Led
 from aiy.voice import tts
 
 
-parser = argparse.ArgumentParser(description='Assistant service example.')
-parser.add_argument('--language', default=locale_language())
-args = parser.parse_args()
-logging.info('Initializing for language %s...', args.language)
-hints = get_hints(args.language)
-client = CloudSpeechClient()
+
 
 '''
 
@@ -108,7 +103,12 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
-
+    parser = argparse.ArgumentParser(description='Assistant service example.')
+    parser.add_argument('--language', default=locale_language())
+    args = parser.parse_args()
+    logging.info('Initializing for language %s...', args.language)
+    hints = get_hints(args.language)
+    client = CloudSpeechClient()
     with Board() as board:
         while True:
             if hints:
