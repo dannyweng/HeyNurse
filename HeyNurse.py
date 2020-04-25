@@ -56,6 +56,9 @@ def process_event(assistant, led, event):
         elif text == 'ip address':
             assistant.stop_conversation()
             say_ip()
+        elif text == 'hey nurse':
+            assistant.stop_conversation()
+            hey_nurse()
     elif event.type == EventType.ON_END_OF_UTTERANCE:
         led.state = Led.PULSE_QUICK  # Thinking.
     elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
