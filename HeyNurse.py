@@ -138,9 +138,9 @@ def process_event(assistant, led, event):
             # Hey Nurse commands
             if 'hey nurse' in text:
                 aiy.voice.tts.say('hi danny')
-                logging.info(event)
-                print(event.type)
-                print(EventType)
+                #logging.info(event)
+                #print(event.type)
+                #print(EventType)
 
                 if event.type == EventType.ON_MUTED_CHANGED:
                     led.state = Led.BEACON_DARK  # Ready.
