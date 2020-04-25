@@ -19,20 +19,14 @@ from aiy.board import Board, Led
 from aiy.voice import tts
 
 
-'''
-def get_hints(language_code):
-    if language_code.startswith('en_'):
-        return ('turn on the light',
-                'turn off the light',
-                'blink the light',
-                'goodbye',
-                'repeat after me',
-                'hey nurse')
-    return None
+parser = argparse.ArgumentParser(description='Assistant service example.')
+parser.add_argument('--language', default=locale_language())
+args = parser.parse_args()
+logging.info('Initializing for language %s...', args.language)
+hints = get_hints(args.language)
+client = CloudSpeechClient()
 
-def locale_language():
-    language, _ = locale.getdefaultlocale()
-    return language
+'''
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -114,12 +108,7 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
-    parser = argparse.ArgumentParser(description='Assistant service example.')
-    parser.add_argument('--language', default=locale_language())
-    args = parser.parse_args()
-    logging.info('Initializing for language %s...', args.language)
-    hints = get_hints(args.language)
-    client = CloudSpeechClient()
+
     with Board() as board:
         while True:
             if hints:
