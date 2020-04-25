@@ -119,7 +119,7 @@ def process_event(assistant, led, event):
                                     hint_phrases=hints)
             if text is None:
                 logging.info('You said nothing.')
-                continue
+                #continue
 
             logging.info('You said: "%s"' % text)
             text = text.lower()
@@ -167,7 +167,6 @@ def process_event(assistant, led, event):
                     led.state = Led.BEACON_DARK  # Ready.
                 elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
                     sys.exit(1)
-                continue
 
 
 
