@@ -168,44 +168,44 @@ def process_event(assistant, led, event):
             if 'hey nurse' in text:
                 aiy.voice.tts.say('hi danny')
                 logging.info(event)
-                    if event.type == EventType.ON_START_FINISHED:
-                        led.state = Led.BEACON_DARK  # Ready.
-                        print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
-                    elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
-                        led.state = Led.ON  # Listening.
-                    elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
-                        print('You said:', event.args['text'])
-                        text = event.args['text'].lower()
-                        if text == 'power off':
-                            assistant.stop_conversation()
-                            power_off_pi()
-                        elif text == 'reboot':
-                            assistant.stop_conversation()
-                            reboot_pi()
-                        elif text == 'ip address':
-                            assistant.stop_conversation()
-                            say_ip()
-                    elif event.type == EventType.ON_END_OF_UTTERANCE:
-                        led.state = Led.PULSE_QUICK  # Thinking.
-                    elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
-                        or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
-                        or event.type == EventType.ON_NO_RESPONSE):
-                        led.state = Led.BEACON_DARK  # Ready.
-                    elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
-                        sys.exit(1)
+                if event.type == EventType.ON_START_FINISHED:
+                    led.state = Led.BEACON_DARK  # Ready.
+                    print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
+                elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
+                    led.state = Led.ON  # Listening.
+                elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
+                    print('You said:', event.args['text'])
+                    text = event.args['text'].lower()
+                    if text == 'power off':
+                        assistant.stop_conversation()
+                        power_off_pi()
+                    elif text == 'reboot':
+                        assistant.stop_conversation()
+                        reboot_pi()
+                    elif text == 'ip address':
+                        assistant.stop_conversation()
+                        say_ip()
+                elif event.type == EventType.ON_END_OF_UTTERANCE:
+                    led.state = Led.PULSE_QUICK  # Thinking.
+                elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
+                    or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
+                    or event.type == EventType.ON_NO_RESPONSE):
+                    led.state = Led.BEACON_DARK  # Ready.
+                elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
+                    sys.exit(1)
 
 
 
-                    elif 'goodbye' in text:
-                        break
+                elif 'goodbye' in text:
+                    break
 
-                def main():
-                    logging.basicConfig(level=logging.INFO)
+            def main():
+                logging.basicConfig(level=logging.INFO)
 
-                    credentials = auth_helpers.get_assistant_credentials()
-                    with Board() as board, Assistant(credentials) as assistant:
-                        for event in assistant.start():
-                            process_event(assistant, board.led, event)
+                credentials = auth_helpers.get_assistant_credentials()
+                with Board() as board, Assistant(credentials) as assistant:
+                    for event in assistant.start():
+                        process_event(assistant, board.led, event)
 
 
             if __name__ == '__main__':
