@@ -42,7 +42,7 @@ def process_event(assistant, led, event):
     if event.type == EventType.ON_START_FINISHED:
         led.state = Led.BEACON_DARK  # Ready.
         print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
-    elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
+    elif event.type == EventType.ON_CONVERSATION_TURN_STARTED: #Hot Word activation 'OK Google'
         led.state = Led.ON  # Listening.
     elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
         print('You said:', event.args['text'])
@@ -59,6 +59,8 @@ def process_event(assistant, led, event):
         elif text == 'hey nurse':
             assistant.stop_conversation()
             hey_nurse()
+        else:
+            print(text)
     elif event.type == EventType.ON_END_OF_UTTERANCE:
         led.state = Led.PULSE_QUICK  # Thinking.
     elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
