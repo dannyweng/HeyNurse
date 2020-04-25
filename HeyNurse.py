@@ -149,6 +149,8 @@ def process_event(assistant, led, event):
             # Hey Nurse commands
             if 'hey nurse' in text:
                 aiy.voice.tts.say('hi danny')
+                print(event.type)
+                print(EventType.ON_START_FINISHED)
 
                 if event.type == EventType.ON_START_FINISHED:
                     led.state = Led.BEACON_DARK  # Ready.
@@ -182,8 +184,7 @@ def process_event(assistant, led, event):
                     break
 
                 logging.info(event)
-                print(event)
-                print(EventType.ON_START_FINISHED)
+
 
 def main():
     #logging.basicConfig(level=logging.INFO)
