@@ -187,9 +187,9 @@ def process_event(assistant, led, event):
 
 
 def main():
-    #logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO)
 
-    logging.basicConfig(level=logging.DEBUG)
+    #logging.basicConfig(level=logging.DEBUG)
 
 
     credentials = auth_helpers.get_assistant_credentials()
