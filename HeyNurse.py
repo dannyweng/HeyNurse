@@ -94,6 +94,10 @@ def get_hints(language_code):
                 'hey nurse')
     return None
 
+def locale_language():
+    language, _ = locale.getdefaultlocale()
+    return language
+
 def power_off_pi():
     tts.say('Good bye!')
     subprocess.call('sudo shutdown now', shell=True)
@@ -110,6 +114,14 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
+    logging.basicConfig(level=logging.DEBUG)
+
+    parser = argparse.ArgumentParser(description='Assistant service example.')
+    parser.add_argument('--language', default=locale_language())
+    args = parser.parse_args()
+
+    logging.info('Initializing for language %s...', args.language)
+    hints = get_hints(args.language)
 
     client = CloudSpeechClient()
     with Board() as board:
