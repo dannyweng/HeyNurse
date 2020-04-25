@@ -61,7 +61,7 @@ def process_event(assistant, led, event):
             hey_nurse()
         else: #debug
             print('debug: ' + text)
-            print('prints the response from Google Assistant: ' + EventType.ON_RENDER_RESPONSE)
+            print('prints the response from Google Assistant: ' + str(EventType.ON_RENDER_RESPONSE))
     elif event.type == EventType.ON_END_OF_UTTERANCE:
         led.state = Led.PULSE_QUICK  # Thinking.
     elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
