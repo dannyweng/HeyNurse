@@ -140,7 +140,8 @@ def process_event(assistant, led, event):
                 aiy.voice.tts.say('hi danny')
                 logging.info(event)
                 print(event.type)
-                print(logging.info(event))
+                print(EventType)
+
                 if event.type == EventType.ON_MUTED_CHANGED:
                     led.state = Led.BEACON_DARK  # Ready.
                     print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
@@ -169,10 +170,10 @@ def process_event(assistant, led, event):
 
 
 
-                elif 'goodbye' in text:
-                    break
+            elif 'goodbye' in text:
+                break
 
-                logging.info(event)
+            logging.info(event)
 
 
 def main():
