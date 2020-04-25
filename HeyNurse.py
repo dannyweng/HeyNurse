@@ -149,9 +149,9 @@ def process_event(assistant, led, event):
             # Hey Nurse commands
             if 'hey nurse' in text:
                 aiy.voice.tts.say('hi danny')
+                logging.info(event)
                 print(event.type)
-                print(EventType.ON_START_FINISHED)
-
+                print(ogging.info(event))
                 if event.type == EventType.ON_START_FINISHED:
                     led.state = Led.BEACON_DARK  # Ready.
                     print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
