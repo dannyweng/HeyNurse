@@ -119,61 +119,63 @@ def process_event(assistant, led, event):
                                     hint_phrases=hints)
             if text is None:
                 logging.info('You said nothing.')
-                #continue
+                continue
 
-            logging.info('You said: "%s"' % text)
-            text = text.lower()
-            if 'turn on the light' in text:
-                board.led.state = Led.ON
-            elif 'turn off the light' in text:
-                board.led.state = Led.OFF
-            elif 'blink the light' in text:
-                board.led.state = Led.BLINK
-            # Our new command:
-            if 'repeat after me' in text:
-                # Remove "repeat after me" from the text to be repeated
-                to_repeat = text.replace('repeat after me', '', 1)
-                aiy.voice.tts.say(to_repeat)
-            
-            # Hey Nurse commands
-            if 'hey nurse' in text:
-                aiy.voice.tts.say('hi danny')
-                #logging.info(event)
-                #print(event.type)
-                #print(EventType)
+            else:
 
-                if event.type == EventType.ON_MUTED_CHANGED:
-                    led.state = Led.BEACON_DARK  # Ready.
-                    print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
-                elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
-                    led.state = Led.ON  # Listening.
-                elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
-                    print('You said:', event.args['text'])
-                    text = event.args['text'].lower()
-                    if text == 'power off':
-                        assistant.stop_conversation()
-                        power_off_pi()
-                    elif text == 'reboot':
-                        assistant.stop_conversation()
-                        reboot_pi()
-                    elif text == 'ip address':
-                        assistant.stop_conversation()
-                        say_ip()
-                elif event.type == EventType.ON_END_OF_UTTERANCE:
-                    led.state = Led.PULSE_QUICK  # Thinking.
-                elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
-                    or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
-                    or event.type == EventType.ON_NO_RESPONSE):
-                    led.state = Led.BEACON_DARK  # Ready.
-                elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
-                    sys.exit(1)
+                logging.info('You said: "%s"' % text)
+                text = text.lower()
+                if 'turn on the light' in text:
+                    board.led.state = Led.ON
+                elif 'turn off the light' in text:
+                    board.led.state = Led.OFF
+                elif 'blink the light' in text:
+                    board.led.state = Led.BLINK
+                # Our new command:
+                if 'repeat after me' in text:
+                    # Remove "repeat after me" from the text to be repeated
+                    to_repeat = text.replace('repeat after me', '', 1)
+                    aiy.voice.tts.say(to_repeat)
+                
+                # Hey Nurse commands
+                if 'hey nurse' in text:
+                    aiy.voice.tts.say('hi danny')
+                    #logging.info(event)
+                    #print(event.type)
+                    #print(EventType)
+
+                    if event.type == EventType.ON_MUTED_CHANGED:
+                        led.state = Led.BEACON_DARK  # Ready.
+                        print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
+                    elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
+                        led.state = Led.ON  # Listening.
+                    elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
+                        print('You said:', event.args['text'])
+                        text = event.args['text'].lower()
+                        if text == 'power off':
+                            assistant.stop_conversation()
+                            power_off_pi()
+                        elif text == 'reboot':
+                            assistant.stop_conversation()
+                            reboot_pi()
+                        elif text == 'ip address':
+                            assistant.stop_conversation()
+                            say_ip()
+                    elif event.type == EventType.ON_END_OF_UTTERANCE:
+                        led.state = Led.PULSE_QUICK  # Thinking.
+                    elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
+                        or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
+                        or event.type == EventType.ON_NO_RESPONSE):
+                        led.state = Led.BEACON_DARK  # Ready.
+                    elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
+                        sys.exit(1)
 
 
 
-            elif 'goodbye' in text:
-                break
+                elif 'goodbye' in text:
+                    break
 
-            logging.info(event)
+                logging.info(event)
 
 
 def main():
