@@ -199,15 +199,15 @@ def process_event(assistant, led, event):
                 elif 'goodbye' in text:
                     break
 
-            def main():
-                logging.basicConfig(level=logging.INFO)
+def main():
+    logging.basicConfig(level=logging.INFO)
 
-                credentials = auth_helpers.get_assistant_credentials()
-                with Board() as board, Assistant(credentials) as assistant:
-                    for event in assistant.start():
-                        process_event(assistant, board.led, event)
+    credentials = auth_helpers.get_assistant_credentials()
+    with Board() as board, Assistant(credentials) as assistant:
+        for event in assistant.start():
+            process_event(assistant, board.led, event)
 
 
-            if __name__ == '__main__':
-                main()
+if __name__ == '__main__':
+    main()
 
