@@ -84,41 +84,15 @@ if __name__ == '__main__':
 '''
 
 
-
-#!/usr/bin/env python3
-# Copyright 2017 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-"""Run a recognizer using the Google Assistant Library.
-
-The Google Assistant Library has direct access to the audio API, so this Python
-code doesn't need to record audio. Hot word detection "OK, Google" is supported.
-
-It is available for Raspberry Pi 2/3 only; Pi Zero is not supported.
-"""
-
-import logging
-import platform
-import subprocess
-import sys
-
-from google.assistant.library.event import EventType
-
-from aiy.assistant import auth_helpers
-from aiy.assistant.library import Assistant
-from aiy.board import Board, Led
-from aiy.voice import tts
+def get_hints(language_code):
+    if language_code.startswith('en_'):
+        return ('turn on the light',
+                'turn off the light',
+                'blink the light',
+                'goodbye',
+                'repeat after me',
+                'hey nurse')
+    return None
 
 def power_off_pi():
     tts.say('Good bye!')
