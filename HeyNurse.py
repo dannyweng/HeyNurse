@@ -60,8 +60,8 @@ def process_event(assistant, led, event):
             assistant.stop_conversation()
             hey_nurse()
         else: #debug
-            print(text)
-            print(EventType.ON_RENDER_RESPONSE)
+            print('debug: ' + text)
+            print(EventType.ON_RENDER_RESPONSE.text)
     elif event.type == EventType.ON_END_OF_UTTERANCE:
         led.state = Led.PULSE_QUICK  # Thinking.
     elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
