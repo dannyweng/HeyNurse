@@ -150,6 +150,8 @@ def process_event(assistant, led, event):
             if 'hey nurse' in text:
                 aiy.voice.tts.say('hi danny')
                 logging.info(event)
+                print(event)
+                print(EventType.ON_START_FINISHED)
                 if event.type == EventType.ON_START_FINISHED:
                     led.state = Led.BEACON_DARK  # Ready.
                     print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
@@ -193,6 +195,7 @@ def main():
     credentials = auth_helpers.get_assistant_credentials()
     with Board() as board, Assistant(credentials) as assistant:
         for event in assistant.start():
+            print(event)
             process_event(assistant, board.led, event)
 
     
