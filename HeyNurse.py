@@ -114,6 +114,8 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
+    args = parser.parse_args()
+    logging.info('Initializing for language %s...', args.language)
     hints = get_hints(args.language)
     client = CloudSpeechClient()
     with Board() as board:
@@ -184,9 +186,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Assistant service example.')
     parser.add_argument('--language', default=locale_language())
-    args = parser.parse_args()
 
-    logging.info('Initializing for language %s...', args.language)
 
 
     credentials = auth_helpers.get_assistant_credentials()
