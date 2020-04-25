@@ -169,7 +169,7 @@ def process_event(assistant, led, event):
                         led.state = Led.BEACON_DARK  # Ready.
                     elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
                         sys.exit(1)
-                    continue
+                continue
 
 
 
