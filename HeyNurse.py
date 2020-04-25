@@ -152,7 +152,7 @@ def process_event(assistant, led, event):
                 logging.info(event)
                 print(event.type)
                 print(logging.info(event))
-                if event.type == EventType.ON_START_FINISHED:
+                if event.type == EventType.ON_MUTED_CHANGED:
                     led.state = Led.BEACON_DARK  # Ready.
                     print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
                 elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
