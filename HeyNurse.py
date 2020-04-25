@@ -114,6 +114,8 @@ def say_ip():
 
 
 def process_event(assistant, led, event):
+    parser = argparse.ArgumentParser(description='Assistant service example.')
+    parser.add_argument('--language', default=locale_language())
     args = parser.parse_args()
     logging.info('Initializing for language %s...', args.language)
     hints = get_hints(args.language)
@@ -184,8 +186,7 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
 
-    parser = argparse.ArgumentParser(description='Assistant service example.')
-    parser.add_argument('--language', default=locale_language())
+
 
 
 
