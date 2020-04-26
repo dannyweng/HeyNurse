@@ -18,70 +18,74 @@ from aiy.assistant.library import Assistant
 from aiy.board import Board, Led
 from aiy.voice import tts
 
-def power_off_pi():
-    tts.say('Good bye!')
-    subprocess.call('sudo shutdown now', shell=True)
+class Myassistant():
+
+    def power_off_pi():
+        tts.say('Good bye!')
+        subprocess.call('sudo shutdown now', shell=True)
 
 
-def reboot_pi():
-    tts.say('See you in a bit!')
-    subprocess.call('sudo reboot', shell=True)
+    def reboot_pi():
+        tts.say('See you in a bit!')
+        subprocess.call('sudo reboot', shell=True)
 
 
-def say_ip():
-    ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True)
-    tts.say('My IP address is %s' % ip_address.decode('utf-8'))
+    def say_ip():
+        ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True)
+        tts.say('My IP address is %s' % ip_address.decode('utf-8'))
 
 
-def hey_nurse():
-    tts.say('Hi, Danny')
+    def hey_nurse():
+        tts.say('Hi, Danny')
 
 
-def process_event(assistant, led, event):
-    logging.info(event)
-    if event.type == EventType.ON_START_FINISHED:
-        led.state = Led.BEACON_DARK  # Ready.
-        print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
-    elif event.type == EventType.ON_CONVERSATION_TURN_STARTED: #Hot Word activation 'OK Google'
-        led.state = Led.ON  # Listening.
-    elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
-        print('You said:', event.args['text'])
-        text = event.args['text'].lower()
-        if text == 'power off':
-            assistant.stop_conversation()
-            power_off_pi()
-        elif text == 'reboot':
-            assistant.stop_conversation()
-            reboot_pi()
-        elif text == 'ip address':
-            assistant.stop_conversation()
-            say_ip()
-        elif text == 'hey nurse':
-            assistant.stop_conversation()
-            hey_nurse()
-        else: #debug
-            #print('debug: ' + text)
-            print(EventType.ON_RENDER_RESPONSE)
-    elif event.type == EventType.ON_END_OF_UTTERANCE:
-        led.state = Led.PULSE_QUICK  # Thinking.
-    elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
-          or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
-          or event.type == EventType.ON_NO_RESPONSE):
-        led.state = Led.BEACON_DARK  # Ready.
-    elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
-        sys.exit(1)
+    def process_event(assistant, led, event):
+        logging.info(event)
+        if event.type == EventType.ON_START_FINISHED:
+            led.state = Led.BEACON_DARK  # Ready.
+            print('Say "OK, Google" then speak, or press Ctrl+C to quit...')
+        elif event.type == EventType.ON_CONVERSATION_TURN_STARTED: #Hot Word activation 'OK Google'
+            led.state = Led.ON  # Listening.
+        elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
+            print('You said:', event.args['text'])
+            text = event.args['text'].lower()
+            if text == 'power off':
+                assistant.stop_conversation()
+                power_off_pi()
+            elif text == 'reboot':
+                assistant.stop_conversation()
+                reboot_pi()
+            elif text == 'ip address':
+                assistant.stop_conversation()
+                say_ip()
+            elif text == 'hey nurse':
+                assistant.stop_conversation()
+                hey_nurse()
+            else: #debug
+                #print('debug: ' + text)
+                print(EventType.ON_RENDER_RESPONSE)
+        elif event.type == EventType.ON_END_OF_UTTERANCE:
+            led.state = Led.PULSE_QUICK  # Thinking.
+        elif (event.type == EventType.ON_CONVERSATION_TURN_FINISHED
+            or event.type == EventType.ON_CONVERSATION_TURN_TIMEOUT
+            or event.type == EventType.ON_NO_RESPONSE):
+            led.state = Led.BEACON_DARK  # Ready.
+        elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args['is_fatal']:
+            sys.exit(1)
 
 
-def main():
-    logging.basicConfig(level=logging.INFO)
-    #logging.basicConfig(level=logging.DEBUG)
+    def main():
+        logging.basicConfig(level=logging.INFO)
+        #logging.basicConfig(level=logging.DEBUG)
 
-    credentials = auth_helpers.get_assistant_credentials()
-    with Board() as board, Assistant(credentials) as assistant:
-        for event in assistant.start():
-            process_event(assistant, board.led, event)
+        credentials = auth_helpers.get_assistant_credentials()
+        with Board() as board, Assistant(credentials) as assistant:
+            for event in assistant.start():
+                process_event(assistant, board.led, event)
 
 
 if __name__ == '__main__':
-    main()
-
+    try:
+        Myassistant().main()
+    except Exception as error:
+        logging.exception(error)
