@@ -18,7 +18,7 @@ from aiy.assistant.library import Assistant
 from aiy.board import Board, Led
 from aiy.voice import tts
 
-class Myassistant():
+class Myassistant:
 
     def power_off_pi():
         tts.say('Good bye!')
@@ -86,6 +86,6 @@ class Myassistant():
 
 if __name__ == '__main__':
     try:
-        Myassistant().main()
+        Myassistant.main()
     except Exception as error:
         logging.exception(error)
