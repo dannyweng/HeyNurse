@@ -20,22 +20,48 @@ from aiy.voice import tts
 
 class Myassistant:
 
-    def power_off_pi():
+    def __init__(self):
+        self.interrupted=False
+        self.can_start_conversation=False
+        self.assistant=None
+        self.sensitivity = [0.5]*len(models)
+        self.callbacks = [self.detected]*len(models)
+        self.detector = snowboydecoder.HotwordDetector(models, sensitivity=self.sensitivity)
+        self.mutestatus=False
+        self.interpreter=False
+        self.interpconvcounter=0
+        self.interpcloudlang1=language
+        self.interpttslang1=translanguage
+        self.interpcloudlang2=''
+        self.interpttslang2=''
+        self.singleresposne=False
+        self.singledetectedresponse=''
+        self.t1 = Thread(target=self.start_detector)
+        if GPIOcontrol:
+            self.t2 = Thread(target=self.pushbutton)
+        if configuration['MQTT']['MQTT_Control']=='Enabled':
+            self.t3 = Thread(target=self.mqtt_start)
+        if irreceiver!=None:
+            self.t4 = Thread(target=self.ircommands)
+        if configuration['ADAFRUIT_IO']['ADAFRUIT_IO_CONTROL']=='Enabled':
+            self.t5 = Thread(target=self.adafruit_mqtt_start)
+
+    def power_off_pi(self):
         tts.say('Good bye!')
         subprocess.call('sudo shutdown now', shell=True)
 
 
-    def reboot_pi():
+    def reboot_pi(self):
         tts.say('See you in a bit!')
         subprocess.call('sudo reboot', shell=True)
 
 
-    def say_ip():
+    def say_ip(self):
         ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True)
         tts.say('My IP address is %s' % ip_address.decode('utf-8'))
 
 
-    def hey_nurse():
+    def hey_nurse(self):
         tts.say('Hi, Danny')
 
 
@@ -74,7 +100,7 @@ class Myassistant:
             sys.exit(1)
 
 
-    def main():
+    def main(self):
         logging.basicConfig(level=logging.INFO)
         #logging.basicConfig(level=logging.DEBUG)
 
