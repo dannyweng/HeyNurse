@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+
+# Hey Nurse
+# Author: Danny Weng
+# Reference:
+# https://github.com/dannyweng
+
 import argparse
 import locale
 import logging
@@ -5,11 +12,11 @@ import platform
 import subprocess
 import sys
 from aiy.board import Board, Led
-from aiy.cloudspeech import CloudSpeechClient
 from aiy.assistant import auth_helpers
 from aiy.assistant.library import Assistant
 from aiy.voice import tts
 from google.assistant.library.event import EventType
+#from aiy.cloudspeech import CloudSpeechClient
 
 
 def power_off_pi():
