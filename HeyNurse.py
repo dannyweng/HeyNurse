@@ -6,19 +6,27 @@
 # https://github.com/dannyweng
 
 
-import argparse
-import locale
-import logging
-import platform
-import subprocess
-import sys
-from aiy.board import Board, Led
-from aiy.assistant import auth_helpers
-from aiy.assistant.library import Assistant
-from aiy.voice import tts
-from google.assistant.library.event import EventType
-#from aiy.cloudspeech import CloudSpeechClient
-import fitParse
+# import modules
+try:
+    import argparse
+    import locale
+    import logging
+    import platform
+    import subprocess
+    import sys
+    from aiy.board import Board, Led
+    from aiy.assistant import auth_helpers
+    from aiy.assistant.library import Assistant
+    from aiy.voice import tts
+    from google.assistant.library.event import EventType
+    #from aiy.cloudspeech import CloudSpeechClient
+    import fitParse
+
+
+# Any import errors print to screen and exit
+except (Exception, error):
+	print ('error')
+	sys.exit(1)
 
 
 def power_off_pi():
