@@ -69,7 +69,7 @@ def runHeyNurse():
                 hey_nurse()
             elif text == 'date' & 'heart':
                 assistant.stop_conversation()
-                googleFitHeart()
+                googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
             else: #debug
                 #print('debug: ' + text)
                 print(EventType.ON_RENDER_RESPONSE)
