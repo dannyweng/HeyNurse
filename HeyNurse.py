@@ -37,11 +37,12 @@ def say_ip():
 
 
 def hey_nurse():
+    tts.say('Hi, Danny')
 
 
 def googleFitHeart(date, dataType):
     fitParse.googleFitAverage(date, dataType)
-    tts.say('Hi, Danny')
+    tts.say(f"You're average heart rate was {fitParse.meanValue}")
 
 
 def process_event(assistant, led, event):
