@@ -79,7 +79,7 @@ df = df.set_index(['datetime'])
 def googleFitAverage(date, dataType):
     countData = df.at[f'{date}', f'{dataType}']
     meanValue = np.mean(countData)
-    return meanValue
+    return round(meanValue, 1)
 
 
 # googleFitAverage('2020-04-01', 'Average heart rate (bpm)')

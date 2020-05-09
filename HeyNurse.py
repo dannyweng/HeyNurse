@@ -22,12 +22,29 @@ try:
     #from aiy.cloudspeech import CloudSpeechClient
     from fitParse import googleFitAverage
     import fitParse
+    from dateutil.parser import parse
+    from datetime import datetime
 
 
 # Any import errors print to screen and exit
 except (Exception, error):
 	print ('error')
 	sys.exit(1)
+
+
+def is_date(string, fuzzy=False):
+    """
+    Return whether the string can be interpreted as a date.
+
+    :param string: str, string to check for date
+    :param fuzzy: bool, ignore unknown tokens in string if True
+    """
+    try: 
+        parse(string, fuzzy=fuzzy)
+        return True
+
+    except ValueError:
+        return False
 
 
 def power_off_pi():
@@ -76,18 +93,23 @@ def process_event(assistant, led, event):
         elif text == 'hey nurse':
             assistant.stop_conversation()
             hey_nurse()
-        # HEY NURSE Inquires here
-        elif text.__contains__("heart" and "date" and "rate") == True:
-            assistant.stop_conversation()
-            googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
-            print ("Yeyy, found the substring!")
-        # else:
-        #     print ("Oops, not found!")
-
-        # elif text == 'date' & 'heart':
-        #     assistant.stop_conversation()
-        #     googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
         
+        # HEY NURSE Inquires here
+        elif text.__contains__("heart" and "rate") and is_date(text, fuzzy=True) == True:
+            assistant.stop_conversation()
+
+            if is_date(text, fuzzy=True):
+                whatIsTheDate = [parse(text, fuzzy_with_tokens=True)]
+                # print(whatIsTheDate[0][0].strftime('%Y-%m-%d'))
+                fitDate = (whatIsTheDate[0][0].strftime('%Y-%m-%d'))
+                print(fitDate)
+            else:
+                fitDate = '2020-04-01'
+                print('I didnt get a date')
+            googleFitHeart(f'{fitDate}', 'Average heart rate (bpm)')
+            print ("Yeyy, found the substring!")
+
+
         else: #debug
             #print('debug: ' + text)
             print(EventType.ON_RENDER_RESPONSE)
