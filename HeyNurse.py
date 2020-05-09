@@ -80,8 +80,8 @@ def process_event(assistant, led, event):
             assistant.stop_conversation()
             googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
             print ("Yeyy, found the substring!")
-        else:
-            print ("Oops, not found!")
+        # else:
+        #     print ("Oops, not found!")
 
         # elif text == 'date' & 'heart':
         #     assistant.stop_conversation()
