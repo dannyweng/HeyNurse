@@ -75,9 +75,18 @@ def process_event(assistant, led, event):
         elif text == 'hey nurse':
             assistant.stop_conversation()
             hey_nurse()
-        elif text == 'date' & 'heart':
+        # HEY NURSE Inquires here
+        elif text.__contains__("heart" and "date" and "rate") == True:
             assistant.stop_conversation()
             googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
+            print ("Yeyy, found the substring!")
+        else:
+            print ("Oops, not found!")
+
+        # elif text == 'date' & 'heart':
+        #     assistant.stop_conversation()
+        #     googleFitHeart('2020-04-01', 'Average heart rate (bpm)')
+        
         else: #debug
             #print('debug: ' + text)
             print(EventType.ON_RENDER_RESPONSE)
