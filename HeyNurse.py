@@ -20,7 +20,7 @@ try:
     from aiy.voice import tts
     from google.assistant.library.event import EventType
     #from aiy.cloudspeech import CloudSpeechClient
-    import fitParse
+    from fitParse import googleFitAverage
 
 
 # Any import errors print to screen and exit
