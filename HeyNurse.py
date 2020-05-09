@@ -68,6 +68,7 @@ def hey_nurse():
 
 def googleFitHeart(date, dataType):
     fitResponse = fitParse.googleFitAverage(date, dataType)
+    print(f"You're average heart rate on {fitDate} was {fitResponse}")
     tts.say(f"You're average heart rate on {fitDate} was {fitResponse}")
 
 
