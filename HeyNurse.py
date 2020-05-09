@@ -68,7 +68,7 @@ def hey_nurse():
 
 def googleFitHeart(date, dataType):
     fitResponse = fitParse.googleFitAverage(date, dataType)
-    tts.say(f"You're average heart rate was {fitResponse}")
+    tts.say(f"You're average heart rate on {fitDate} was {fitResponse}")
 
 
 def process_event(assistant, led, event):
@@ -101,8 +101,9 @@ def process_event(assistant, led, event):
             if is_date(text, fuzzy=True):
                 whatIsTheDate = [parse(text, fuzzy_with_tokens=True)]
                 # print(whatIsTheDate[0][0].strftime('%Y-%m-%d'))
+                global fitDate
                 fitDate = (whatIsTheDate[0][0].strftime('%Y-%m-%d'))
-                print(fitDate)
+                # print(fitDate)
             else:
                 fitDate = '2020-04-01'
                 print('I didnt get a date')
