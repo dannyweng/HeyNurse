@@ -109,7 +109,7 @@ def process_event(assistant, led, event):
                 fitDate = '2020-04-01'
                 print('I didnt get a date')
             googleFitHeart(f'{fitDate}', 'Average heart rate (bpm)')
-            print ("Yeyy, found the substring!")
+            # print ("Yeyy, found the substring!")
 
 
         else: #debug
