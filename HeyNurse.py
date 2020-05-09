@@ -50,8 +50,8 @@ def hey_nurse():
 
 
 def googleFitHeart(date, dataType):
-    fitParse.googleFitAverage(date, dataType)
-    tts.say(f"You're average heart rate was {fitParse.meanValue}")
+    fitResponse = fitParse.googleFitAverage(date, dataType)
+    tts.say(f"You're average heart rate was {fitResponse}")
 
 
 def process_event(assistant, led, event):
