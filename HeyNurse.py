@@ -21,6 +21,7 @@ try:
     from google.assistant.library.event import EventType
     #from aiy.cloudspeech import CloudSpeechClient
     from fitParse import googleFitAverage
+    import fitParse
 
 
 # Any import errors print to screen and exit
